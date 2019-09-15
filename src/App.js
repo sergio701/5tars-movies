@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch } from "react-router-dom";
+import "assets/scss/material-kit-react.scss?v=1.8.0";
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
-function App() {
+import Components from "views/Components/Components.js";
+import LandingPage from "views/LandingPage/LandingPage.js";
+import ProfilePage from "views/ProfilePage/ProfilePage.js";
+import LoginPage from "views/LoginPage/LoginPage.js";
+import SearchPage from "views/SearchPage/SearchPage.js";
+
+const hist = createBrowserHistory();
+
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router history={hist}>
+        <Switch>
+          <Route path="/landing-page" component={LandingPage} />
+          <Route path="/profile-page" component={ProfilePage} />
+          <Route path="/login-page" component={LoginPage} />
+          <Route path="/Components" component={Components} />
+          <Route path="/" component={SearchPage} />
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
