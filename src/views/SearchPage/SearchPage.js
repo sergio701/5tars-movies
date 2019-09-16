@@ -1,55 +1,61 @@
-import React from "react";
-// nodejs library that concatenates classes
+import React, { useReducer } from "react";
 import classNames from "classnames";
-// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+// @material-ui/core components
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Divider from '@material-ui/core/Divider';
 // @material-ui/icons
+import Icon from "@material-ui/core/Icon";
 import Camera from "@material-ui/icons/Camera";
 import Palette from "@material-ui/icons/Palette";
 import Favorite from "@material-ui/icons/Favorite";
-// core components
-import Header from "components/Header/Header.js";
-import Footer from "components/Footer/Footer.js";
-import Button from "components/CustomButtons/Button.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import Autosuggest from "components/Search/Search.js";
 import Search from "@material-ui/icons/Search";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Icon from "@material-ui/core/Icon";
-import HeaderLinks from "components/Header/HeaderLinks.js";
-import { getMoviesSearch } from "modules/tmdbClient.js";
-
+// core components
+import Header from "components/Header/Header";
+import Footer from "components/Footer/Footer";
+import Button from "components/CustomButtons/Button";
+import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem.js";
+import CustomInput from "components/CustomInput/CustomInput";
+import Autosuggest from "components/Search/Search.js";
+import HeaderLinks from "components/Header/HeaderLinks";
+// modules
+import { getMoviesSearch } from "modules/tmdbClient";
+import { reducer, initialState } from "./reducer";
+import actions from './actions';
+// styles
 import styles from "./SearchPageStyle.js";
 
 const useStyles = makeStyles(styles);
 
-const fetchMovies = query => {
-  getMoviesSearch(query)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) =>{
-      console.error(error);
-    })
-};
-
 const SearchPage = props => {
   const classes = useStyles();
-  const { ...rest } = props;
-  fetchMovies('aven');
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const getMovies = async (query) => {
+    if(query && query.length) {
+      dispatch(actions.fetching(query));
+      try {
+          const response = await getMoviesSearch(query);
+          dispatch(actions.success(response.results));
+      } catch (e) {
+          dispatch(actions.error());
+      }
+    } else {
+      dispatch(actions.success([]));
+    }    
+  };
   return (
     <div>
       <Header
         className={classNames(classes.header)}
         brand="5tars Movies"
-        leftLinks={
-          <div>
-            <Autosuggest />            
-          </div>
-        }
         rightLinks={
           <List className={classes.list}>            
             <ListItem className={classes.listItem}>
@@ -67,21 +73,36 @@ const SearchPage = props => {
         fixed
         color="dark"
         changeColorOnScroll={{
-          height: 400,
-          color: "rose"
+          height: 30,
+          color: "primary"
         }}
-        {...rest}
       />
-      <div className={classes.container}>
-        <GridContainer>
-          <GridItem>
-            
-          </GridItem>
-        </GridContainer>
-      </div>
 
       <div className={classNames(classes.main, classes.mainContent)}>
-          MAIN CONTENT
+        <GridContainer>
+          <GridItem xs={9}>
+            <Autosuggest onSearch={getMovies} />   
+          </GridItem>
+        </GridContainer>
+        <Divider className={classes.divider} />
+        <GridList cellHeight={200} spacing={1} className={classes.gridList}>
+          {state.movies.map(tile => (
+            <GridListTile key={tile.img} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
+              <img src={tile.img} alt={tile.title} />
+              <GridListTileBar
+                title={tile.title}
+                titlePosition="top"
+                actionIcon={
+                  <IconButton aria-label={`star ${tile.title}`} className={classes.icon}>
+                    <StarBorderIcon />
+                  </IconButton>
+                }
+                actionPosition="left"
+                className={classes.titleBar}
+              />
+            </GridListTile>
+          ))}
+        </GridList>
       </div>
       <Footer />
     </div>

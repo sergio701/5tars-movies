@@ -32,6 +32,7 @@ const SearchPageStyle = theme => ({
     mainContent: {
         margin: "100px 30px 0px",
         borderRadius: "6px",
+        padding: '20px 30px',
         boxShadow:
           "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)"
       },
@@ -93,6 +94,9 @@ const SearchPageStyle = theme => ({
       },
     header: {
         borderRadius: "0px"
+    },
+    divider: {
+        margin: '15px -15px'
     }
   });
 
