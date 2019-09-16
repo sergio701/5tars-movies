@@ -2,6 +2,8 @@ import React, { useReducer } from "react";
 import classNames from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/core components
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
@@ -12,19 +14,10 @@ import ListItem from "@material-ui/core/ListItem";
 import Divider from '@material-ui/core/Divider';
 // @material-ui/icons
 import Icon from "@material-ui/core/Icon";
-import Camera from "@material-ui/icons/Camera";
-import Palette from "@material-ui/icons/Palette";
-import Favorite from "@material-ui/icons/Favorite";
-import Search from "@material-ui/icons/Search";
 // core components
+import Search from "components/Search/Search";
 import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
-import Button from "components/CustomButtons/Button";
-import GridContainer from "components/Grid/GridContainer";
-import GridItem from "components/Grid/GridItem.js";
-import CustomInput from "components/CustomInput/CustomInput";
-import Autosuggest from "components/Search/Search.js";
-import HeaderLinks from "components/Header/HeaderLinks";
 // modules
 import { getMoviesSearch } from "modules/tmdbClient";
 import { reducer, initialState } from "./reducer";
@@ -79,11 +72,11 @@ const SearchPage = props => {
       />
 
       <div className={classNames(classes.main, classes.mainContent)}>
-        <GridContainer>
-          <GridItem xs={9}>
-            <Autosuggest onSearch={getMovies} />   
-          </GridItem>
-        </GridContainer>
+        <Grid container>
+          <Grid item xs={9}>
+            <Search onSearch={getMovies} />   
+          </Grid>
+        </Grid>
         <Divider className={classes.divider} />
         <GridList cellHeight={200} spacing={1} className={classes.gridList}>
           {state.movies.map(tile => (
