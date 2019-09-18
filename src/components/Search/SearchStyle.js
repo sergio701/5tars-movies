@@ -6,7 +6,7 @@ const SearchStyle = theme => ({
   container: {
     position: 'relative',
     display: 'inline-flex',
-    width: 'calc(100% - 45px)',
+    width: 'calc(100% - 48px)',
   },
   suggestionsContainerOpen: {
     position: 'absolute',
@@ -27,9 +27,15 @@ const SearchStyle = theme => ({
   divider: {
     height: theme.spacing(2),
   },
+  searchButton: {
+    borderRadius: '50%',
+    height: '48px',
+    width: '48px',
+    minWidth: 0
+  },
   searchIcon: {
-    width: "20px",
-    height: "20px",
+    width: "24px",
+    height: "24px",
     color: "inherit"
   },
   input: {

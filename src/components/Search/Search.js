@@ -7,10 +7,10 @@ import parse from 'autosuggest-highlight/parse';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 import Search from "@material-ui/icons/Search";
-import Button from "components/CustomButtons/Button.js";
 import { makeStyles } from '@material-ui/core/styles';
-import { getMoviesSearch } from "modules/tmdbClient.js";
+import { getMoviesSearch } from "modules/tmdbClient";
 
 import styles from "./SearchStyle.js";
 
@@ -39,7 +39,6 @@ const renderInputComponent = inputProps => {
 const renderSuggestion = (suggestion, { query, isHighlighted }) => {
   const matches = match(suggestion.title, query);
   const parts = parse(suggestion.title, matches);
-  const year = suggestion.release_date.slice(0, 4);
 
   return (
     <MenuItem selected={isHighlighted} component="div">
@@ -49,7 +48,6 @@ const renderSuggestion = (suggestion, { query, isHighlighted }) => {
             {part.text}
           </span>
         ))}
-        <span style={{ fontWeight: 200 }}> ({year})</span>
       </div>
     </MenuItem>
   );
@@ -129,7 +127,7 @@ const IntegrationAutosuggest = ({ onSearch }) => {
           </Paper>
         )}
       />
-      <Button justIcon round color="primary" className={classes.searchButton} onClick={(e) => {onSearch(state.single)}}>
+      <Button variant="contained" color="primary" className={classes.searchButton} onClick={(e) => {onSearch(state.single)}}>
         <Search className={classes.searchIcon} />
       </Button>    
     </div>

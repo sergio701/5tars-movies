@@ -12,6 +12,7 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from '@material-ui/core/Divider';
+import Container from '@material-ui/core/Container';
 // @material-ui/icons
 import Icon from "@material-ui/core/Icon";
 // core components
@@ -24,6 +25,7 @@ import { reducer, initialState } from "./reducer";
 import actions from './actions';
 // styles
 import styles from "./SearchPageStyle.js";
+import MovieCard from "components/MovieCard/MovieCard";
 
 const useStyles = makeStyles(styles);
 
@@ -53,7 +55,6 @@ const SearchPage = props => {
           <List className={classes.list}>            
             <ListItem className={classes.listItem}>
               <Button
-                href="#pablo"
                 className={classes.navLink}
                 onClick={e => e.preventDefault()}
                 color="transparent"
@@ -71,32 +72,20 @@ const SearchPage = props => {
         }}
       />
 
-      <div className={classNames(classes.main, classes.mainContent)}>
+      <Container className={classes.mainContainer}>
         <Grid container>
           <Grid item xs={9}>
             <Search onSearch={getMovies} />   
           </Grid>
         </Grid>
-        <Divider className={classes.divider} />
-        <GridList cellHeight={200} spacing={1} className={classes.gridList}>
-          {state.movies.map(tile => (
-            <GridListTile key={tile.img} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
-              <img src={tile.img} alt={tile.title} />
-              <GridListTileBar
-                title={tile.title}
-                titlePosition="top"
-                actionIcon={
-                  <IconButton aria-label={`star ${tile.title}`} className={classes.icon}>
-                    <StarBorderIcon />
-                  </IconButton>
-                }
-                actionPosition="left"
-                className={classes.titleBar}
-              />
-            </GridListTile>
+        <Grid container >
+          {state.movies.map(movie => (
+          <Grid item xs={12} sm={6} md={4} lg={3}>
+            <MovieCard movie={movie} /> 
+          </Grid>
           ))}
-        </GridList>
-      </div>
+        </Grid>
+      </Container>
       <Footer />
     </div>
   );
