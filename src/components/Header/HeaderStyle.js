@@ -1,4 +1,3 @@
-import zIndex from "@material-ui/core/styles/zIndex";
 
 const HeaderStyle = theme => ({
     root: {

@@ -1,6 +1,6 @@
 import { blueGrey } from '@material-ui/core/colors';
 
-const SearchStyle = theme => ({
+const MovieCardStyle = theme => ({
     root: {
       textAlign: 'center',
       marginTop: 30
@@ -9,6 +9,15 @@ const SearchStyle = theme => ({
       width: 250,
       display: 'inline-block',
       textAlign: 'left'
+    },
+    header: {
+      position: 'relative'
+    },
+    release: {
+      position: 'absolute',
+      color: blueGrey[500],
+      top: 16,
+      right: 16
     },
     image: {
       height: '100%',
@@ -45,12 +54,16 @@ const SearchStyle = theme => ({
     backdropIma: {
       backgroundColor: blueGrey[300],
       height: 120,
+      marginTop: 10
     },
     posterIma: {
       backgroundColor: blueGrey[300],
       height: 350,
+    },
+    collapseContent: {
+      paddingTop: 0
     }
   });
   
   
-  export default SearchStyle;
+  export default MovieCardStyle;

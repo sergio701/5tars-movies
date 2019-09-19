@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -17,11 +16,19 @@ import styles from "./SearchStyle.js";
 const useStyles = makeStyles(styles);
 
 const renderInputComponent = inputProps => {
-  const { classes, inputRef = () => {}, ref, ...other } = inputProps;
+  const { classes, inputRef = () => {}, ref, search, ...other } = inputProps;
+  
+  const onKeyPress = event => {
+    if (event.charCode === 13) {
+      event.target.blur();
+      search();
+    } 
+  };
 
   return (
     <TextField
       fullWidth
+      onKeyPress={onKeyPress}
       InputProps={{
         inputRef: node => {
           ref(node);
@@ -59,7 +66,6 @@ const getSuggestionValue = suggestion => {
 
 const IntegrationAutosuggest = ({ onSearch }) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [state, setState] = React.useState({
     single: '',
     popper: '',
@@ -68,14 +74,11 @@ const IntegrationAutosuggest = ({ onSearch }) => {
   const [stateSuggestions, setSuggestions] = React.useState([]);
 
   const handleSuggestionsFetchRequested = ({ value }) => {
-    console.log(value);
     getMoviesSearch(value)
       .then((response) => {
-        console.log(response);
         setSuggestions(response.results.slice(0, 10));
       })
-      .catch((error) =>{
-        console.error(error);
+      .catch((error) => {
         setSuggestions([]);
       });
   };
@@ -113,6 +116,7 @@ const IntegrationAutosuggest = ({ onSearch }) => {
           placeholder: 'Type your movie',
           value: state.single,
           onChange: handleChange('single'),
+          search: ()=>{onSearch(state.single)},
         }}
         theme={{
           container: classes.container,

@@ -11,10 +11,9 @@ const SearchStyle = theme => ({
   suggestionsContainerOpen: {
     position: 'absolute',
     zIndex: 1,
-    marginTop: theme.spacing(1),
+    marginTop: '50px',
     left: 0,
-    right: 0,
-    marginTop: '50px'
+    right: 0,    
   },
   suggestion: {
     display: 'block',
@@ -42,6 +41,5 @@ const SearchStyle = theme => ({
       width: '100%'
   }
 });
-
 
 export default SearchStyle;
