@@ -7,7 +7,7 @@ import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
 import MovieCard from "components/MovieCard/MovieCard";
 import Typography from '@material-ui/core/Typography';
-import { getMoviesSearch } from "modules/tmdbClient";
+import { getFavorites } from "modules/tmdbClient";
 import { reducer, initialState } from "./reducer";
 import actions from './actions';
 import styles from "./MyFavoritesStyle.js";
@@ -18,21 +18,17 @@ const MyFavorites = props => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const getMovies = async (query) => {
-    if(query && query.length) {
-      dispatch(actions.fetching(query));
-      try {
-          const response = await getMoviesSearch(query);
-          dispatch(actions.success(response.results));
-      } catch (e) {
-          dispatch(actions.error());
-      }
-    } else {
-      dispatch(actions.success([]));
-    }    
+  const getMovies = async () => {    
+    dispatch(actions.fetching());
+    try {
+        const response = await getFavorites();
+        dispatch(actions.success(response.results));
+    } catch (e) {
+        dispatch(actions.error());
+    }  
   };
   useEffect(() => {
-    getMovies('martian');
+    getMovies();
   }, []);
   return (
     <div>
@@ -43,7 +39,7 @@ const MyFavorites = props => {
         </Typography>
         <GridList className={classes.gridList} cellHeight='auto' spacing={0}>
           {state.movies.map((movie, i) => (
-            <div className={classes.movieCard}>
+            <div className={classes.movieCard} key={i}>
               <MovieCard movie={movie}/> 
             </div>            
           ))}

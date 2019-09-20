@@ -9,7 +9,6 @@ import styles from "./ScoreStyle.js";
 const useStyles = makeStyles(styles);
 
 const Score = ({ score }) => {
-  score = score;
   const classes = useStyles();
   score = (score/2);
   const integer = Math.floor(score);
