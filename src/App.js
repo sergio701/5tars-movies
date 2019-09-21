@@ -1,18 +1,13 @@
 import React from "react";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
-import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import SearchPage from "views/SearchPage/SearchPage";
 import MyFavorites from "views/MyFavorites/MyFavorites";
+import { makeStyles } from '@material-ui/core/styles';
+import theme from "./AppStyle";
 
 const hist = createBrowserHistory();
-
-const theme = createMuiTheme({
-  palette: {
-    type: 'light',
-  },
-});
 
 const App = () => {
   return (

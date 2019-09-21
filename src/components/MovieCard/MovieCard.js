@@ -13,19 +13,17 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Tooltip from '@material-ui/core/Tooltip';
 import { getMovieImagesUrls } from  "modules/movie-utils";
-import StarIcon from '@material-ui/icons/Star';
-import { amber } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import styles from "./MovieCardStyle.js";
 
 const useStyles = makeStyles(styles);
 
-const MovieCard = ({ movie, addFavorite, isFavorite , removeFavorite}) => {
+const MovieCard = ({ movie, addFavorite, isFavorite , removeFavorite }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const { backdropUrl, posterUrl } = getMovieImagesUrls(movie);
   const year = movie.release_date ? movie.release_date.slice(0,4) : null;
-  const iconColor = isFavorite ? amber[600] : null;
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -66,7 +64,7 @@ const MovieCard = ({ movie, addFavorite, isFavorite , removeFavorite}) => {
                 else
                   addFavorite(movie.id);                  
                 }}>
-              <StarIcon htmlColor={iconColor}/>
+              <FavoriteIcon color={isFavorite ? 'secondary' : 'inherit'}/>
             </IconButton>
           </Tooltip>         
           <IconButton

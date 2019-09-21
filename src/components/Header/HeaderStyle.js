@@ -11,6 +11,13 @@ const HeaderStyle = theme => ({
       },
       title: {
         flexGrow: 1,
+      },
+      logo: {
+        width: 'auto',
+        height: '55px'
+      },
+      link: {
+        textDecoration: 'none'
       }
   });
   

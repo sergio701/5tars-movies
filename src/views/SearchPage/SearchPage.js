@@ -21,7 +21,7 @@ const useStyles = makeStyles(styles);
 const SearchPage = props => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(new Set());
 
   const getMovies = async (query) => {
     if(query && query.length) {
@@ -41,29 +41,33 @@ const SearchPage = props => {
     try {
         const response = await getFavorites();
         const favs= response.results.map(movie => {return movie.id});
-        setFavorites(favs)
+        setFavorites(new Set(favs));
     } catch (e) {
         dispatch(actions.error());
     }  
   };
 
-  const addFavorite = async (id) => {
-    try {
-      const response = await addToFavorites(id);      
-      setFavorites([...favorites.add(id)]);
-    } catch (e) {}   
+  const addFavorite = (id) => {
+    addToFavorites(id).then(() => {
+      let added = new Set(favorites);
+      added.add(id);
+      setFavorites(added);
+    });
   };
 
-  const removeFavorite = async (id) => {
-    try {
-      const response = await removeFromFavorites(id);
-      let removed = response.map(fav => {if(fav !== id) return fav});
+  const removeFavorite = (id) => {
+    removeFromFavorites(id).then(() => {
+      let removed = new Set(favorites);
+      removed.delete(id);
       setFavorites(removed);
-    } catch (e) {}    
+    });;
   };
 
   const isFavorite = id => {
-    return favorites.includes(id);
+    if(favorites)
+      return favorites.has(id); 
+    else
+      return false    
   }
 
   useEffect(() => {
@@ -71,7 +75,7 @@ const SearchPage = props => {
   }, []);
 
   return (
-    <div>
+    <div className={classes.root}>
       <Header/>
       <Container className={classes.mainContainer}>
         <Grid container>
