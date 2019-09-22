@@ -46,8 +46,6 @@ const removeFromFavorites = id => fetch(addFavoriteUrl, {
   })
 }).then((response) => response.json());
 
-
-
 export {
   getMoviesSearch,
   getFavorites,

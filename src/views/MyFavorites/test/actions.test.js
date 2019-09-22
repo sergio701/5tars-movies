@@ -1,12 +1,11 @@
 import { actions, types } from '../actions';
 
-describe('SearchPage actions', () => {
+describe('MyFavorites actions', () => {
   it('should returns fetching action', () => {
-    let expected = {
-      type: types.FETCHING,
-      query: 'test'
+    const expected = {
+      type: types.FETCHING
     };
-    expect(actions.fetching('test')).toEqual(expected);
+    expect(actions.fetching()).toEqual(expected);
   });
   
   it('should returns error action', () => {

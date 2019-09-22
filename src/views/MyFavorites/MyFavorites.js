@@ -9,7 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import {
   addToFavorites,
   getFavorites,
-  removeFromFavorites 
+  removeFromFavorites,
+  testFun 
 } from "modules/tmdb-client";
 import { reducer, initialState } from "./reducer";
 import actions from './actions';
@@ -22,12 +23,12 @@ const MyFavorites = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [favorites, setFavorites] = useState(new Set());
 
-  const getMovies = async () => {    
+  const getMovies = async () => {
     dispatch(actions.fetching());
     try {
         const response = await getFavorites();
         dispatch(actions.success(response.results));
-        const favs= response.results.map(movie => {return movie.id});
+        const favs = response.results.map(movie => {return movie.id});
         setFavorites(new Set(favs));
     } catch (e) {
         dispatch(actions.error());
@@ -60,7 +61,6 @@ const MyFavorites = props => {
   useEffect(() => {
     getMovies();
   }, []);
-
   return (
     <div>
       <Header />
