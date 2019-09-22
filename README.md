@@ -8,9 +8,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Preview
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/csstools/postcss-language/master/preview/search.png" width="90%" style="max-width:100%;">
+    <img src="https://raw.githubusercontent.com/sergio701/5tars-movies/master/preview/search.png" width="90%" style="max-width:100%;">
     <br />
-    <img src="https://raw.githubusercontent.com/csstools/postcss-language/master/preview/favorites.png" width="90%" style="max-width:100%;">
+    <img src="https://raw.githubusercontent.com/sergio701/5tars-movies//master/preview/favorites.png" width="90%" style="max-width:100%;">
 </p>
 
 ## Technology stack
