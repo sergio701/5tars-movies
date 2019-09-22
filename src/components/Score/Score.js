@@ -10,9 +10,9 @@ const useStyles = makeStyles(styles);
 
 const Score = ({ score }) => {
   const classes = useStyles();
-  score = (score/2);
+  score = Math.ceil(score)/2;;
   const integer = Math.floor(score);
-  const decimal = Math.round(score % 1);
+  const decimal = Math.ceil(score % 1);
   let gap = 5 - integer - decimal;
 
   return (

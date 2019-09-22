@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import styles from "./FooterStyle.js";
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(styles)
+const useStyles = makeStyles(styles);
 
 const Footer = () => {
   const classes = useStyles();

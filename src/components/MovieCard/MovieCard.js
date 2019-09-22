@@ -1,4 +1,5 @@
 import React from 'react';
+import { string, number, bool, func, shape } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Score from "components/Score/Score";
@@ -19,7 +20,7 @@ import styles from "./MovieCardStyle.js";
 
 const useStyles = makeStyles(styles);
 
-const MovieCard = ({ movie, addFavorite, isFavorite , removeFavorite }) => {
+const MovieCard = ({ movie, isFavorite, addFavorite, removeFavorite }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const { backdropUrl, posterUrl } = getMovieImagesUrls(movie);
@@ -58,7 +59,6 @@ const MovieCard = ({ movie, addFavorite, isFavorite , removeFavorite }) => {
         <CardActions disableSpacing>
           <Tooltip title="Add to my favorites">
             <IconButton aria-label="add to favorites" onClick={ e => {
-                console.log({id: movie.id, isFavorite})
                 if(isFavorite)
                   removeFavorite(movie.id);
                 else
@@ -98,6 +98,25 @@ const MovieCard = ({ movie, addFavorite, isFavorite , removeFavorite }) => {
       </Card>
     </div>
   );
-}
+};
 
-export  default MovieCard;
+MovieCard.prototype = {
+  movie: shape({
+    id: number.required,
+    release_date: string,
+    vote_average: number,
+    title: string,
+    overview: string,
+    backdrop_path: string,
+    poster_path: string
+  }).required,
+  isFavorite: bool,
+  addFavorite: func,
+  removeFavorite: func 
+};
+
+MovieCard.defaultProps = {
+  isFavorite: false  
+};
+
+export default MovieCard;

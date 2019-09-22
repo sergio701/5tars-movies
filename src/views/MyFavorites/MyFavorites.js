@@ -10,7 +10,7 @@ import {
   addToFavorites,
   getFavorites,
   removeFromFavorites 
-} from "modules/tmdbClient";
+} from "modules/tmdb-client";
 import { reducer, initialState } from "./reducer";
 import actions from './actions';
 import styles from "./MyFavoritesStyle.js";

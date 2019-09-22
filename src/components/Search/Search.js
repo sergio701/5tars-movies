@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import { func } from "prop-types";
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Search from "@material-ui/icons/Search";
 import { makeStyles } from '@material-ui/core/styles';
-import { getMoviesSearch } from "modules/tmdbClient";
+import { getMoviesSearch } from "modules/tmdb-client";
 
 import styles from "./SearchStyle.js";
 
@@ -19,7 +19,7 @@ const renderInputComponent = inputProps => {
   const { classes, inputRef = () => {}, ref, search, ...other } = inputProps;
   
   const onKeyPress = event => {
-    if (event.charCode === 13) {
+    if (event.key === 'Enter') {
       event.target.blur();
       search();
     } 
@@ -101,8 +101,8 @@ const IntegrationAutosuggest = ({ onSearch }) => {
     onSuggestionsClearRequested: handleSuggestionsClearRequested,
     getSuggestionValue,
     renderSuggestion,
-    onSuggestionSelected: (e, s) => {
-        console.log({e, s});
+    onSuggestionSelected: () => {
+      onSearch(state.single);
     }
   };
 
@@ -139,7 +139,7 @@ const IntegrationAutosuggest = ({ onSearch }) => {
 };
 
 IntegrationAutosuggest.propTypes = {
-    onSearch: PropTypes.func
+    onSearch: func
 }
 
 export default IntegrationAutosuggest;
