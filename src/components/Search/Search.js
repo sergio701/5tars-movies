@@ -112,8 +112,8 @@ const IntegrationAutosuggest = ({ onSearch }) => {
         {...autosuggestProps}
         inputProps={{
           classes,
-          label: 'Find your movie',
-          placeholder: 'Type your movie',
+          label: 'Find your favorite movie',
+          placeholder: 'Search',
           value: state.single,
           onChange: handleChange('single'),
           search: ()=>{onSearch(state.single)},

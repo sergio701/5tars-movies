@@ -9,8 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import {
   addToFavorites,
   getFavorites,
-  removeFromFavorites,
-  testFun 
+  removeFromFavorites
 } from "modules/tmdb-client";
 import { reducer, initialState } from "./reducer";
 import actions from './actions';
