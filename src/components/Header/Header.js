@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Fab from '@material-ui/core/Fab';
 import Toolbar from '@material-ui/core/Toolbar';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import MovieFilterIcon from '@material-ui/icons/MovieFilter';
 import LogoSVG from "components/LogoSVG/LogoSVG";
 import styles from "./HeaderStyle.js";
 
@@ -21,10 +21,10 @@ const Header = () => {
               <LogoSVG  className={classes.logo}/>
             </a> 
           </div>
-          <a href="/MyFavorites" className={classes.link}>
-            <Fab variant="extended" size="small" color="secondary">              
-              My Favorites
-              <FavoriteIcon />
+          <a href="/MyLists" className={classes.link}>
+            <Fab  className={classes.listButton} variant="extended" size="small" color="secondary">              
+              My Movies{''}
+              <MovieFilterIcon />
             </Fab>
           </a>
         </Toolbar>
