@@ -2,18 +2,28 @@
 import { types } from './actions';
 
 export const initialState = {
-  movies: [],
+  favorites: [],
+  watchLater: [],
   status: ''
 };
 
-export const reducer = (state = initialState, { type, movies } = {}) => {
+export const reducer = (state = initialState, { type, favorites, watchLater, id } = {}) => {
+  let change
   switch (type) {
     case types.FETCHING:
       return { ...initialState, status: types.FETCHING };
-    case types.SUCCESS:
-      return { ...state, status: types.SUCCESS, movies };
+    case types.FAVORITES:
+      return { ...state, status: types.SUCCESS, favorites };
+    case types.REMOVE_FAVORITE:
+        change = state.favorites.filter(movie => movie.id != id);
+      return { ...state, favorites: change };
+    case types.WATCH_LATER:
+      return { ...state, status: types.SUCCESS, watchLater };
+    case types.REMOVE_WATCH_LATER:
+      change = state.watchLater.filter(movie => movie.id != id);
+      return { ...state, watchLater: change };  
     case types.ERROR:
-      return { ...state, status: types.ERROR, movies: [] };
+      return { ...state, status: types.ERROR };
     default:
       return state;
     }

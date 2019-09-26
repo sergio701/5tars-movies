@@ -4,10 +4,11 @@ import Container from '@material-ui/core/Container';
 import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
 import MoviesList from "components/MoviesList/MoviesList";
-import {
-  addToFavorites,
+import {  
   getFavorites,
-  removeFromFavorites
+  removeFromFavorites,
+  getWatchLater,
+  removeFromWatchLater
 } from "modules/tmdb-client";
 import { reducer, initialState } from "./reducer";
 import actions from './actions';
@@ -19,45 +20,48 @@ const useStyles = makeStyles(styles);
 const MyLists = props => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [favorites, setFavorites] = useState(new Set());
 
-  const getMovies = async () => {
+  const getFavoritesMovies= async () => {
     dispatch(actions.fetching());
     try {
         const response = await getFavorites();
-        dispatch(actions.success(response.results));
-        const favs = response.results.map(movie => {return movie.id});
-        setFavorites(new Set(favs));
+        dispatch(actions.favorites(response.results));
     } catch (e) {
         dispatch(actions.error());
     }  
   };
 
-  const addFavorite = (id) => {
-    addToFavorites(id).then(() => {
-      let added = new Set(favorites);
-      added.add(id);
-      setFavorites(added);
-    });
+  const removeFavorite = async (id) => {
+    try {
+      const response = await removeFromFavorites(id);
+      dispatch(actions.removeFavorite(response.results[0].media_id));
+  } catch (e) {
+      dispatch(actions.error());
+  } 
   };
 
-  const removeFavorite = (id) => {
-    removeFromFavorites(id).then(() => {
-      let removed = new Set(favorites);
-      removed.delete(id);
-      setFavorites(removed);
-    });;
+  const getWatchLaterMovies = async () => {
+    dispatch(actions.fetching());
+    try {
+        const response = await getWatchLater();
+        dispatch(actions.watchLater(response.results));
+    } catch (e) {
+        dispatch(actions.error());
+    }  
   };
 
-  const isFavorite = id => {
-    if(favorites)
-      return favorites.has(id); 
-    else
-      return false    
-  }
+  const removeWatchLater = async (id) => {
+    try {
+      const response = await removeFromWatchLater(id);
+      dispatch(actions.removeWatchLater(response.results[0].media_id));
+  } catch (e) {
+      dispatch(actions.error());
+  } 
+  };
 
   useEffect(() => {
-    getMovies();
+    getFavoritesMovies();
+    getWatchLaterMovies();
   }, []);
   return (
     <div>
@@ -65,16 +69,15 @@ const MyLists = props => {
       <Container className={classes.mainContainer}>
         <MoviesList
           title="My Favorites"
-          movies={state.movies}
-          addToList={addFavorite}
-          removeFavorite={removeFavorite}
+          movies={state.favorites}
+          removeFromList={removeFavorite}
           color={deepOrange[500]}
+          deleteMode={true}
         /> 
         <MoviesList
           title="Watch Later"
-          movies={state.movies}
-          addToList={addFavorite}
-          removeFromList={removeFavorite}
+          movies={state.watchLater}
+          removeFromList={removeWatchLater}
           color={green[500]}
         />
       </Container>

@@ -3,6 +3,9 @@ import { string, number, arrayOf, func, shape } from 'prop-types';
 import GridList from '@material-ui/core/GridList';
 import Typography from '@material-ui/core/Typography';
 import MovieCard from "components/MovieCard/MovieCard";
+import CardButton from "components/CardButton/CardButton";
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import { deepPurple } from '@material-ui/core/colors';
 import styles from "./MoviesListStyle.js";
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -11,9 +14,8 @@ const useStyles = makeStyles(styles);
 const MoviesList = ({ 
   title,
   movies,
-  addToList, 
   removeFromList,
-  color 
+  color,
 }) => {
   const classes = useStyles();  
   return (
@@ -27,9 +29,18 @@ const MoviesList = ({
             <div className={classes.movieCard} key={i}>
               <MovieCard 
                 movie={movie}
-                deleteMode={true} 
-                addToList={addToList}
-                removeFromList={removeFromList}
+                toolButtons={
+                  <>
+                  <CardButton 
+                    help="Remove"
+                    icon={<DeleteOutlineIcon />}
+                    color={deepPurple[500]}
+                    active={true}
+                    onTurnOn={()=>{removeFromList(movie.id)}}
+                    onTurnOff={()=>{removeFromList(movie.id)}}
+                  />
+                  </>
+                }
               /> 
             </div>            
           ))}

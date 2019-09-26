@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, number, bool, func, shape } from 'prop-types';
+import { string, number, bool, func, shape, node } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Score from "components/Score/Score";
@@ -14,13 +14,16 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Tooltip from '@material-ui/core/Tooltip';
 import { getMovieImagesUrls } from  "modules/movie-utils";
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import styles from "./MovieCardStyle.js";
 
 const useStyles = makeStyles(styles);
 
-const MovieCard = ({ movie, isFavorite, addFavorite, removeFavorite }) => {
+const MovieCard = ({ 
+  movie,
+  toolButtons
+}) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const { backdropUrl, posterUrl } = getMovieImagesUrls(movie);
@@ -40,7 +43,7 @@ const MovieCard = ({ movie, isFavorite, addFavorite, removeFavorite }) => {
               <Typography className={classes.release}>
                 {year}
               </Typography> 
-              <Typography>
+              <Typography className={classes.title}>
                 {movie.title}
               </Typography>
             </>          
@@ -57,16 +60,7 @@ const MovieCard = ({ movie, isFavorite, addFavorite, removeFavorite }) => {
           }
         </div>       
         <CardActions disableSpacing>
-          <Tooltip title="Add to my favorites">
-            <IconButton aria-label="add to favorites" onClick={ e => {
-                if(isFavorite)
-                  removeFavorite(movie.id);
-                else
-                  addFavorite(movie.id);                  
-                }}>
-              <FavoriteIcon color={isFavorite ? 'secondary' : 'inherit'}/>
-            </IconButton>
-          </Tooltip>         
+          {toolButtons}     
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -110,13 +104,10 @@ MovieCard.prototype = {
     backdrop_path: string,
     poster_path: string
   }).required,
-  isFavorite: bool,
-  addFavorite: func,
-  removeFavorite: func 
+  toolButtons: node
 };
 
 MovieCard.defaultProps = {
-  isFavorite: false  
 };
 
 export default MovieCard;

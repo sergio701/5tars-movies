@@ -62,6 +62,10 @@ const MovieCardStyle = theme => ({
     },
     collapseContent: {
       paddingTop: 0
+    },
+    title: {
+      lineHeight: '1em',
+      height: '2em'
     }
   });
   

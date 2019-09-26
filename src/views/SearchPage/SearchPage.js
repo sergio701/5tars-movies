@@ -6,11 +6,18 @@ import Search from "components/Search/Search";
 import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
 import MovieCard from "components/MovieCard/MovieCard";
+import CardButton from "components/CardButton/CardButton";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { deepOrange, green } from '@material-ui/core/colors';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import { 
   getMoviesSearch,
   addToFavorites,
   getFavorites,
-  removeFromFavorites 
+  removeFromFavorites,
+  getWatchLater,
+  addToWatchLater,
+  removeFromWatchLater
 } from "modules/tmdb-client";
 import { reducer, initialState } from "./reducer";
 import actions from './actions';
@@ -22,6 +29,7 @@ const SearchPage = props => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
   const [favorites, setFavorites] = useState(new Set());
+  const [watchLater, setWatchLater] = useState(new Set());
 
   const getMovies = async (query) => {
     if(query && query.length) {
@@ -70,8 +78,42 @@ const SearchPage = props => {
       return false    
   }
 
+  const getWatchLaterMovies = async () => {
+    try {
+        const response = await getWatchLater();
+        const wl = response.results.map(movie => {return movie.id});
+        setWatchLater(new Set(wl));
+    } catch (e) {
+        dispatch(actions.error());
+    }  
+  };
+
+  const addWatchLater = (id) => {
+    addToWatchLater(id).then(() => {
+      let added = new Set(watchLater);
+      added.add(id);
+      setWatchLater(added);
+    });
+  };
+
+  const removeWatchLater = (id) => {
+    removeFromWatchLater(id).then(() => {
+      let removed = new Set(watchLater);
+      removed.delete(id);
+      setWatchLater(removed);
+    });;
+  };
+
+  const isWatchLater = id => {
+    if(watchLater)
+      return watchLater.has(id); 
+    else
+      return false    
+  }
+
   useEffect(() => {
     getFavoritesMovies();
+    getWatchLaterMovies();
   }, []);
 
   return (
@@ -88,9 +130,26 @@ const SearchPage = props => {
           <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
             <MovieCard 
               movie={movie}
-              isFavorite={isFavorite(movie.id)} 
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
+              toolButtons={
+                <>
+                <CardButton 
+                  help="Favorites"
+                  icon={<FavoriteIcon />}
+                  color={deepOrange[500]}
+                  active={isFavorite(movie.id)}
+                  onTurnOn={()=>{addFavorite(movie.id)}}
+                  onTurnOff={()=>{removeFavorite(movie.id)}}
+                />
+                <CardButton 
+                  help="Watch Later"
+                  icon={<VisibilityIcon />}
+                  color={green[500]}
+                  active={isWatchLater(movie.id)}
+                  onTurnOn={()=>{addWatchLater(movie.id)}}
+                  onTurnOff={()=>{removeWatchLater(movie.id)}}
+                />
+                </>
+              }
             /> 
           </Grid>
           ))}

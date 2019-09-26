@@ -2,6 +2,7 @@
 const MoviesListStyle = theme => ({
     root: {
       padding: '0',
+      paddingBottom: 10,
       borderStyle: 'solid',
       borderWidth: '3px 0',
       marginBottom: '50px'
