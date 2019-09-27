@@ -121,7 +121,7 @@ const SearchPage = props => {
       <Header/>
       <Container className={classes.mainContainer}>
         <Grid container>
-          <Grid item xs={9}>
+          <Grid item xs={12} sm={9}>
             <Search onSearch={getMovies} />   
           </Grid>
         </Grid>
