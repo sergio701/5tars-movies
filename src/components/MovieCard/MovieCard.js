@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, number, bool, func, shape, node } from 'prop-types';
+import { string, number, shape, node } from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Score from "components/Score/Score";
@@ -12,9 +12,7 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Tooltip from '@material-ui/core/Tooltip';
 import { getMovieImagesUrls } from  "modules/movie-utils";
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import styles from "./MovieCardStyle.js";
 

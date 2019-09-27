@@ -4,6 +4,10 @@ import Container from '@material-ui/core/Container';
 import Header from "components/Header/Header";
 import Footer from "components/Footer/Footer";
 import MoviesList from "components/MoviesList/MoviesList";
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Box from '@material-ui/core/Box';
 import {  
   getFavorites,
   removeFromFavorites,
@@ -20,6 +24,11 @@ const useStyles = makeStyles(styles);
 const MyLists = props => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabsChange = (event, newValue) => {
+    setActiveTab(newValue);
+  };
 
   const getFavoritesMovies= async () => {
     dispatch(actions.fetching());
@@ -67,19 +76,35 @@ const MyLists = props => {
     <div>
       <Header />
       <Container className={classes.mainContainer}>
-        <MoviesList
-          title="My Favorites"
-          movies={state.favorites}
-          removeFromList={removeFavorite}
-          color={deepOrange[500]}
-          deleteMode={true}
-        /> 
-        <MoviesList
-          title="Watch Later"
-          movies={state.watchLater}
-          removeFromList={removeWatchLater}
-          color={green[500]}
-        />
+        <Paper className={classes.root}>
+          <Tabs value={activeTab} onChange={handleTabsChange} indicatorColor='primary' centered>
+            <Tab label="My Favorites" />
+            <Tab label="Watch Later"/>
+          </Tabs>
+        </Paper>
+        <Box className={classes.tabsContent} color="primary.main">
+          {(() => {
+            switch(activeTab) {
+              case 0:
+                return <MoviesList
+                  title="My Favorites"
+                  movies={state.favorites}
+                  removeFromList={removeFavorite}
+                  color={deepOrange[500]}
+                  deleteMode={true}
+                />;
+              case 1:
+                return <MoviesList
+                  title="Watch Later"
+                  movies={state.watchLater}
+                  removeFromList={removeWatchLater}
+                  color={green[500]}
+                />
+              default:
+                return null;
+            }
+          })()}
+        </Box>
       </Container>
       <Footer />
     </div>

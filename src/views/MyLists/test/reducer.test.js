@@ -18,16 +18,20 @@ describe('MyLists reducer', () => {
     expect(state).toEqual({ ...initialState, status: types.FETCHING });
   });
 
-  it('should update movies on SUCCES action', () => {
-    const movies = [1,2,3];
-    state = reducer(null, actions.success(movies));
-    expect(state).toEqual({ ...initialState, movies, status: types.SUCCESS });
+  it('should update favorites on FAVORITES action', () => {
+    const favorites = [1,2,3];
+    state = reducer(undefined, actions.favorites(favorites));
+    expect(state).toEqual({ ...initialState, favorites });
   });
 
-  it('should empty movies on ERROR action', () => {
-    const movies = [1,2,3];
-    state = reducer(null, actions.success(movies));
-    state = reducer(state, actions.error());
-    expect(state).toEqual({ ...initialState, movies: [], status: types.ERROR });
+  it('should update watchLater on WATCH_LATER action', () => {
+    const watchLater = [1,2,3];
+    state = reducer(undefined, actions.watchLater(watchLater));
+    expect(state).toEqual({ ...initialState, watchLater,});
+  });
+
+  it('should update status on ERROR action', () => {
+    state = reducer(undefined, actions.error());
+    expect(state).toEqual({ ...initialState, status: types.ERROR });
   });
 });

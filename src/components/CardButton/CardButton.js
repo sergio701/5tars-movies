@@ -1,10 +1,6 @@
 import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import styles from "./CardButtonStyle.js";
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles(styles);
 
 const CardButton = ({
   help,
@@ -14,11 +10,9 @@ const CardButton = ({
   onTurnOn,
   onTurnOff
 }) => {
-  const classes = useStyles();
-
-  const colorIcon = React.cloneElement(icon, {
+  const colorIcon = icon ? React.cloneElement(icon, {
     htmlColor: active ? color : null
-  });
+  }) : null;
   
   return (
     <Tooltip title={help}>

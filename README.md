@@ -1,6 +1,6 @@
 # 5tars Movies
 This project is a movies serach engine that allows to find movies and see the related informations as release date, average score, overview and poster's image.
-Also it allows to hanlde a list of "My favorites" where you can add or remove your movies.
+Also it allows to add and remove movies into 2 different list "My Favorites" and "Watch Later".
 It use [tbdm API](https://developers.themoviedb.org/3/getting-started/introduction) as data source.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

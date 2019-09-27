@@ -20,7 +20,7 @@ const MoviesList = ({
   const classes = useStyles();  
   return (
     <>
-    <Typography className={classes.title} variant='h6' style={{color}}>
+    <Typography className={classes.title} variant='subtitle2' style={{color}}>
       {title}
     </Typography>
     <div className={classes.root} style={{borderColor: color}}>

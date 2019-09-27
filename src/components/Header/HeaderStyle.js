@@ -6,21 +6,21 @@ const HeaderStyle = theme => ({
         width: '100%',
         zIndex: 100
       },
-      menuButton: {
-        marginRight: theme.spacing(2),
+      moviesIcon: {
+        marginLeft: theme.spacing(1),
       },
       title: {
         flexGrow: 1,
       },
       logo: {
         width: 'auto',
-        height: '55px'
+        height: '35px',
+        [theme.breakpoints.up('sm')]: {
+          height: '55px',
+        },
       },
       link: {
         textDecoration: 'none'
-      },
-      listButton: {
-        //background: 'linear-gradient(90deg, #4caf50, #ff5722)',
       }
   });
   

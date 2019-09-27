@@ -6,6 +6,11 @@ const MyListsStyle = theme => ({
   },
   list: {
     marginBottom: '30px'
+  },
+  tabsContent: {
+    backgroundColor: theme.palette.background.paper,
+    marginTop: '10px',
+    padding: '15px'
   }
 });
 

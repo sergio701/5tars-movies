@@ -23,8 +23,8 @@ const Header = () => {
           </div>
           <a href="/MyLists" className={classes.link}>
             <Fab  className={classes.listButton} variant="extended" size="small" color="secondary">              
-              My Movies{''}
-              <MovieFilterIcon />
+              My Movies
+              <MovieFilterIcon className={classes.moviesIcon}/>
             </Fab>
           </a>
         </Toolbar>
