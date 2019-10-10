@@ -66,10 +66,7 @@ const getSuggestionValue = suggestion => {
 
 const IntegrationAutosuggest = ({ onSearch }) => {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    single: '',
-    popper: '',
-  });
+  const [value, setValue] = React.useState('');
 
   const [stateSuggestions, setSuggestions] = React.useState([]);
 
@@ -87,11 +84,8 @@ const IntegrationAutosuggest = ({ onSearch }) => {
     setSuggestions([]);
   };
 
-  const handleChange = name => (event, { newValue }) => {
-    setState({
-      ...state,
-      [name]: newValue,
-    });
+  const handleChange = (event, { newValue }) => {
+    setValue(newValue);
   };
 
   const autosuggestProps = {
@@ -102,7 +96,7 @@ const IntegrationAutosuggest = ({ onSearch }) => {
     getSuggestionValue,
     renderSuggestion,
     onSuggestionSelected: () => {
-      onSearch(state.single);
+      onSearch(value);
     }
   };
 
@@ -114,9 +108,9 @@ const IntegrationAutosuggest = ({ onSearch }) => {
           classes,
           label: 'Find your favorite movie',
           placeholder: 'Search',
-          value: state.single,
-          onChange: handleChange('single'),
-          search: ()=>{onSearch(state.single)},
+          value: value,
+          onChange: handleChange,
+          search: ()=>{onSearch(value)},
         }}
         theme={{
           container: classes.container,
@@ -131,7 +125,7 @@ const IntegrationAutosuggest = ({ onSearch }) => {
           </Paper>
         )}
       />
-      <Button variant="contained" color="primary" className={classes.searchButton} onClick={(e) => {onSearch(state.single)}}>
+      <Button variant="contained" color="primary" className={classes.searchButton} onClick={(e) => {onSearch(value)}}>
         <Search className={classes.searchIcon} />
       </Button>    
     </div>
